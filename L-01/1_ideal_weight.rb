@@ -2,7 +2,7 @@ print 'Введите ваше имя: '
 user_name = gets.chomp
 
 print 'Введите ваш рост: '
-user_height  = Integer(gets.chomp)
+user_height  = gets.to_i
 
 ideal_weight = user_height - 110
 

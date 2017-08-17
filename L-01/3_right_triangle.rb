@@ -1,19 +1,23 @@
 print 'Введите первую сторону треугольника:'
-a = Integer(gets.chomp)
+a = STDIN.gets.to_f
 
 print 'Введите вторую сторону треугольника:'
-b = Integer(gets.chomp)
+b = STDIN.gets.to_f
 
 print 'Введите третью сторону треугольника:'
-c = Integer(gets.chomp)
+c = STDIN.gets.to_f
 
-triangle = [a, b, c].sort
+cathetus1, cathetus2, hypotenuse = [a, b, c].sort
 
-if triangle[2]**2 == triangle[1]**2 + triangle[0]**2
-  puts 'Треугольник является прямоугольным!'
-elsif a == b && b == c
+if hypotenuse**2 == cathetus1**2 + cathetus2**2
+  if cathetus1 == cathetus2
+    puts 'Треугольник является прямоугольным и равнобедренным'
+  else
+    puts 'Треугольник является прямоугольным'
+  end
+elsif cathetus1 == cathetus2 && cathetus2 == hypotenuse
   puts 'Треугольник является равносторонним'
-elsif a == b || a == c || b == c
+elsif cathetus1 == cathetus2 || cathetus1 == hypotenuse || cathetus2 == hypotenuse
   puts 'Треугольник является равнобедренным'
 else
   puts 'Треугольник не является равнобедренным, равносторонним, прямоугольным'

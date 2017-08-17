@@ -1,8 +1,9 @@
 print 'Введите основание треугольника: '
-bottom  = Integer(gets.chomp)
+# bottom  = Float(gets.chomp)
+bottom = STDIN.gets.to_f
 
 print 'Введите высоту треугольника: '
-height  = Integer(gets.chomp)
+height  = STDIN.gets.to_f
 
 area = bottom * height * 0.5
 

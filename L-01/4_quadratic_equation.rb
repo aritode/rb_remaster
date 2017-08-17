@@ -1,11 +1,11 @@
 print 'Введите коэффициент a:'
-a = Integer(gets.chomp)
+a = STDIN.gets.to_f
 
 print 'Введите коэффициент b:'
-b = Integer(gets.chomp)
+b = STDIN.gets.to_f
 
 print 'Введите коэффициент c:'
-c = Integer(gets.chomp)
+c = STDIN.gets.to_f
 
 d = (b**2) - (4 * a * c)
 
@@ -20,6 +20,6 @@ if d > 0
 elsif d == 0
   x = -b / (2 * a)
   puts "X1 = X2 = #{x}"
-elsif d < 0
+else
   puts 'Корней нет'
 end
