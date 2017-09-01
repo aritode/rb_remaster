@@ -7,28 +7,13 @@ month = gets.chomp.to_i
 puts 'Введите год: '
 year = gets.chomp.to_i
 
-months = {
-    january: 31,
-    february: 28,
-    march: 31,
-    april: 30,
-    may: 31,
-    june: 30,
-    july: 31,
-    august: 31,
-    september: 30,
-    october: 31,
-    november: 30,
-    december: 31
-}
-
-months[:february] = 29 if year % 400 == 0 || year % 4 == 0
+months = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+months[1] = 29 if year % 400 == 0 || ( year % 4 == 0 && year % 100 != 0 )
 
 number = 0
 
-months.each do |key, value|
-  number += value if month > 1
-  month -= 1
+while month > 1 && month -= 1
+  number += months[month]
 end
 
 number += day

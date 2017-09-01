@@ -1,11 +1,9 @@
 letters = ["a", "e", "i", "o", "u", "y"]
 
-dictionary = Hash.new
-i = 1
+dictionary = {}
 
-('a'..'z').each do |letter|
-  dictionary[letter] = i if letters.include? letter
-  i += 1
+('a'..'z').each.with_index(1) do |letter, index|
+  dictionary[letter] = index if letters.include? letter
 end
 
 print dictionary

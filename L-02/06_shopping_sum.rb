@@ -3,7 +3,8 @@
 
 require 'terminal-table'
 
-puts 'Пользователь вводит поочередно название товара, цену за единицу и кол-во купленного товара (может быть нецелым числом). '
+puts 'Пользователь вводит поочередно название товара, цену за единицу и кол-во купленного товара
+ (может быть нецелым числом). '
 puts 'Введите "стоп" в качестве названия товара для остановки'
 puts
 
@@ -27,20 +28,16 @@ end
 
 puts
 
-rows = []
-final_price = 0
-
-products.each do |title, params|
-  full_price = params[:price] * params[:quantity]
-  final_price += full_price
-  rows << [title, params[:price], params[:quantity], full_price]
+rows = products.map do |title, params|
+  [title, params[:price], params[:quantity], params[:price] * params[:quantity]]
 end
 
 table = Terminal::Table.new :title => 'Ваша корзина',
                             :headings => ['Название товара', 'Стоимость', 'Кол-во', 'Полная цена'],
                             :rows => rows,
                             :style => {:width => 80}
-
 puts table
+
+final_price = products.map { |_title, params| params[:price] * params[:quantity] }.reduce(:+)
 puts
 puts "Итого: #{final_price}"
