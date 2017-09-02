@@ -12,7 +12,8 @@ months[1] = 29 if year % 400 == 0 || ( year % 4 == 0 && year % 100 != 0 )
 
 number = 0
 
-while month > 1 && month -= 1
+while month > 1
+  month -= 1
   number += months[month]
 end
 
