@@ -38,6 +38,6 @@ table = Terminal::Table.new :title => 'Ваша корзина',
                             :style => {:width => 80}
 puts table
 
-final_price = products.map { |_title, params| params[:price] * params[:quantity] }.reduce(:+)
+final_price = products.reduce(0) { |sum, (_title, params)| sum += params[:price] * params[:quantity] }
 puts
 puts "Итого: #{final_price}"
