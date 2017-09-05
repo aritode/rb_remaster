@@ -17,11 +17,11 @@ class Train
   end
 
   def add_carriage
-    @carriages += 1 if self.speed.zero?
+    @carriages += 1 if speed.zero?
   end
 
   def remove_carriage
-    @carriages -= 1 if self.speed.zero? && carriages > 0
+    @carriages -= 1 if speed.zero? && carriages > 0
   end
 
   def add_route=(route)
@@ -35,7 +35,7 @@ class Train
     current_station.release_train(self)
     @train_station_index += 1
     current_station.accept_train(self)
-    self.stop
+    stop
   end
 
   def move_back
@@ -44,7 +44,7 @@ class Train
     current_station.release_train(self)
     @train_station_index -= 1
     current_station.accept_train(self)
-    self.stop
+    stop
   end
 
   def current_station
@@ -59,4 +59,3 @@ class Train
     @route.stations[@train_station_index - 1] unless @train_station_index.zero?
   end
 end
-
