@@ -25,15 +25,16 @@ class Train
   end
 
   def add_route=(route)
-    @route = route
-    @route.stations[@train_station_index = 0].accept_train(self)
+    @route         = route
+    @station_index = 0
+    current_station.accept_train(self)
   end
 
   def move_next
     return if next_station.nil?
     accelerate if speed.zero?
     current_station.release_train(self)
-    @train_station_index += 1
+    @station_index += 1
     current_station.accept_train(self)
     stop
   end
@@ -42,20 +43,20 @@ class Train
     return if previous_station.nil?
     accelerate if speed.zero?
     current_station.release_train(self)
-    @train_station_index -= 1
+    @station_index -= 1
     current_station.accept_train(self)
     stop
   end
 
   def current_station
-    @route.stations[@train_station_index]
+    @route.stations[@station_index]
   end
 
   def next_station
-    @route.stations[@train_station_index + 1]
+    @route.stations[@station_index + 1]
   end
 
   def previous_station
-    @route.stations[@train_station_index - 1] unless @train_station_index.zero?
+    @route.stations[@station_index - 1] unless @station_index.zero?
   end
 end
