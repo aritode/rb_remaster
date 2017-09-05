@@ -1,5 +1,5 @@
 class Station
-  attr_reader :name
+  attr_reader :name, :trains
 
   def initialize(name)
     @name = name
@@ -14,11 +14,7 @@ class Station
     @trains.delete(train)
   end
 
-  def trains
-    @trains.each { |train| puts train }
-  end
-
-  def trains_by(type)
-    trains.map { |train| train.type == type }
+  def trains_by_type(type)
+    trains.select { |train| train.type == type }
   end
 end
