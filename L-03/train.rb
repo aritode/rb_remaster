@@ -21,52 +21,42 @@ class Train
   end
 
   def remove_carriage
-    @carriages -= 1 if self.speed.zero?
+    @carriages -= 1 if self.speed.zero? && carriages > 0
   end
 
   def add_route=(route)
-    @train_route = route
-    @train_station_index = 0
+    @route = route
+    @route.stations[@train_station_index = 0].accept_train(self)
   end
 
   def move_next
-    return if @train_station_index == @train_route.stations.length - 1
+    return if next_station.nil?
     accelerate if speed.zero?
-    @train_route.stations[@train_station_index].release_train(self)
+    current_station.release_train(self)
     @train_station_index += 1
-    @train_route.stations[@train_station_index].accept_train(self)
+    current_station.accept_train(self)
     self.stop
   end
 
   def move_back
-    return if @train_station_index == 0
+    return if previous_station.nil?
     accelerate if speed.zero?
-    @train_route.stations[@train_station_index].release_train(self)
+    current_station.release_train(self)
     @train_station_index -= 1
-    @train_route.stations[@train_station_index].accept_train(self)
+    current_station.accept_train(self)
     self.stop
   end
 
-  def show_current_station
-    @train_route.stations[@train_station_index].name
+  def current_station
+    @route.stations[@train_station_index]
   end
 
-  def show_next_station
-    if @train_station_index < @train_route.stations.length - 1
-      @train_route.stations[@train_station_index + 1].name
-    else
-      puts 'Вы находитесь на последней станции в маршруте'
-      @train_route.stations[@train_station_index].name
-    end
+  def next_station
+    @route.stations[@train_station_index + 1]
   end
 
-  def show_previous_station
-    if @train_station_index - 1 >= 0
-      @train_route.stations[@train_station_index - 1].name
-    else
-      puts 'Вы находитесь на первой станции в маршруте'
-      @train_route.stations[@train_station_index].name
-    end
+  def previous_station
+    @route.stations[@train_station_index - 1] unless @train_station_index.zero?
   end
 end
 
