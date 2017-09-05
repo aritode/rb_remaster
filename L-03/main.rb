@@ -17,12 +17,12 @@ route.add(windsor)
 
 route.delete(alabama)
 route.delete(alaska)
-route.show
+route.stations.each { |station| puts station.name }
 
 puts
 
 route.delete(windsor)
-route.show
+route.stations.each { |station| puts station.name }
 
 train_1 = Train.new(10, :cargo, 20)
 train_2 = Train.new(11, :cargo, 22)
