@@ -24,7 +24,7 @@ class Train
     @carriages -= 1 if speed.zero? && carriages > 0
   end
 
-  def add_route=(route)
+  def route=(route)
     @route         = route
     @station_index = 0
     current_station.accept_train(self)

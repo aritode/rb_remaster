@@ -29,7 +29,7 @@ train_2 = Train.new(11, :cargo, 22)
 train_3 = Train.new(32, :passenger, 16)
 
 puts
-train_2.add_route = route
+train_2.route = route
 puts 'train_2:'
 puts "Current station: #{train_2.current_station.name}"
 puts "Previous station: #{train_2.previous_station.name unless train_2.previous_station.nil?}"
