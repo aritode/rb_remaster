@@ -32,12 +32,12 @@ class Train
 
   def move_next
     return if next_station.nil?
-    move_train(:next)
+    move_train(1)
   end
 
   def move_back
     return if previous_station.nil?
-    move_train(:back)
+    move_train(-1)
   end
 
   def current_station
@@ -52,14 +52,10 @@ class Train
     @route.stations[@station_index - 1] unless @station_index.zero?
   end
 
-  def move_train(direction)
+  def move_train(index_delta)
     accelerate if speed.zero?
     current_station.release_train(self)
-    case direction
-    when :next then @station_index += 1
-    when :back then @station_index -= 1
-    else return
-    end
+    @station_index += index_delta
     current_station.accept_train(self)
     stop
   end
