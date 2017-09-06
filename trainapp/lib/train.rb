@@ -1,10 +1,10 @@
 class Train
-  attr_reader :speed, :carriages, :type
+  attr_reader :speed, :carriages, :type, :number
 
-  def initialize(number, type, carriages)
+  def initialize(number, type)
     @number = number
     @type = type
-    @carriages = carriages
+    @carriages = []
     @speed = 0
   end
 
@@ -16,12 +16,12 @@ class Train
     @speed = 0
   end
 
-  def add_carriage
-    @carriages += 1 if speed.zero?
+  def add_carriage(carriage)
+    @carriages << carriage if speed.zero?
   end
 
   def remove_carriage
-    @carriages -= 1 if speed.zero? && carriages > 0
+    @carriages.pop if speed.zero? && carriages.size > 0
   end
 
   def route=(route)
@@ -51,6 +51,8 @@ class Train
   def previous_station
     @route.stations[@station_index - 1] unless @station_index.zero?
   end
+
+  private
 
   def move_train(index_delta)
     accelerate if speed.zero?

@@ -1,6 +1,13 @@
-require_relative 'lib/train'
 require_relative 'lib/station'
 require_relative 'lib/route'
+
+require_relative 'lib/train'
+require_relative 'lib/train/cargo_train'
+require_relative 'lib/train/passenger_train'
+
+require_relative 'lib/carriage'
+require_relative 'lib/carriage/cargo_carriage'
+require_relative 'lib/carriage/passenger_carriage'
 
 alaska = Station.new("Alaska")
 alabama = Station.new "Alabama"
@@ -24,9 +31,12 @@ puts
 route.delete(windsor)
 route.stations.each { |station| puts station.name }
 
-train_1 = Train.new(10, :cargo, 20)
-train_2 = Train.new(11, :cargo, 22)
-train_3 = Train.new(32, :passenger, 16)
+train1 = PassengerTrain.new(121)
+
+# train_1 = CargoTrain.new(10, :cargo, 20)
+# train_2 = CargoTrain.new(11, :cargo, 22)
+train_2 = CargoTrain.new(11)
+# train_3 = PassengerTrain.new(32, :passenger, 16)
 
 puts
 train_2.route = route
