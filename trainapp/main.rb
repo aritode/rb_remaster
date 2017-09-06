@@ -1,6 +1,6 @@
-require_relative 'train'
-require_relative 'station'
-require_relative 'route'
+require_relative 'lib/train'
+require_relative 'lib/station'
+require_relative 'lib/route'
 
 alaska = Station.new("Alaska")
 alabama = Station.new "Alabama"
