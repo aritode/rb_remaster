@@ -32,8 +32,8 @@ class DisplayPrinter
         6) Add Carriage to Train
         7) Remove Carriage from Train
         8) Move Train Forward and Backwards by assigned Route
-        9) Просматривать список станций и список поездов на станции
-        0) ВЫХОД
+        9) Show List of Stations and Trains on the Stations
+        0) QUIT
     DISPLAY_MENU
     print '=> '
   end
@@ -431,6 +431,11 @@ class DisplayPrinter
   end
 
   def print_stations_and_trains
-    #TODO
+    puts 'Show all Stations'
+    @stations.each do |station|
+      puts "Station: #{station.name}:"
+      puts "Trains:"
+      station.trains.each { |train| puts "№:#{train.number} type:#{train.type}" }
+    end
   end
 end
