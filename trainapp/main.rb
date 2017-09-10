@@ -9,7 +9,7 @@ require_relative 'lib/carriage'
 require_relative 'lib/carriage/cargo_carriage'
 require_relative 'lib/carriage/passenger_carriage'
 
-require_relative 'lib/display_printer'
+require_relative 'lib/menu'
 
-app = DisplayPrinter.new
+app = Menu.new
 app.init

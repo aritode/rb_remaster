@@ -1,4 +1,4 @@
-class DisplayPrinter
+class Menu
 
   def initialize
     @stations = []
