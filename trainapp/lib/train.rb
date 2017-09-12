@@ -1,4 +1,7 @@
+require_relative 'modules/vendor_name'
+
 class Train
+  include VendorName
   attr_reader :speed, :carriages, :type, :number, :route
 
   def initialize(number, type)
