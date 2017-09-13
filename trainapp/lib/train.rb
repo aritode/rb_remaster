@@ -1,7 +1,9 @@
 require_relative 'modules/vendor_name'
+require_relative 'modules/instance_counter'
 
 class Train
   include VendorName
+  include InstanceCounter
   attr_reader :speed, :carriages, :type, :number, :route
 
   @@trains = {}
@@ -12,6 +14,7 @@ class Train
     @carriages = []
     @speed = 0
     @@trains[number] = self
+    register_instance
   end
 
   def self.find(number)
