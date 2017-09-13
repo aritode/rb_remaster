@@ -62,17 +62,18 @@ class Menu
     end
   end
 
+  def validation_error_message(e)
+    puts "\n[ERROR] #{e}"
+    puts 'Please, try again'
+  end
+
   def create_station(title = '[CREATE] Please enter Station name to create:')
     user_input = characters_user_input(title)
-    double_entries = Station.all.select { |item| item.name.downcase == user_input.downcase }
-    if double_entries.empty?
-      station = Station.new(user_input)
-      puts "Station: #{station.name} created!"
-    else
-      puts "\nStation #{user_input} is already in Stations"
-      puts "Please, try another name for Station"
-      create_station
-    end
+    station = Station.new(user_input)
+    puts "\n[SUCCESS] Station: #{station.name} created!"
+  rescue StandardError => e
+    validation_error_message(e)
+    retry
   end
 
   def create_train(title = '[CREATE] Please choose Train type:')
@@ -82,15 +83,13 @@ class Menu
 
     title = 'Please enter Train number:'
     user_input_number = characters_user_input(title)
-    if Train.find(user_input_number).nil?
-      train = train_type.new(user_input_number)
-      @trains << train
-      puts "Train: №:#{train.number} type:#{train.type} created!"
-    else
-      puts "Train with №:#{user_input_number} is already exist!"
-      puts 'Please, try again'
-      create_train
-    end
+
+    train = train_type.new(user_input_number)
+    @trains << train
+    puts "\n[SUCCESS] Train: №:#{train.number} type:#{train.type} created!"
+  rescue StandardError => e
+    validation_error_message(e)
+    retry
   end
 
   def create_route
@@ -122,15 +121,12 @@ class Menu
     title = 'Please choose Route last Station:'
     user_input_last = ordered_list_user_input(title, Station.all)
 
-    if user_input_last == user_input_first
-      puts "\nLast Station can't be the same as First Station"
-      puts 'Please, try again'
-      create_route_core
-    else
-      route = Route.new(Station.all[user_input_first - 1], Station.all[user_input_last - 1])
-      @routes << route
-      puts "Route: #{route.name} created!"
-    end
+    route = Route.new(Station.all[user_input_first - 1], Station.all[user_input_last - 1])
+    @routes << route
+    puts "\n[SUCCESS] Route: #{route.name} created!"
+  rescue StandardError => e
+    validation_error_message(e)
+    retry
   end
 
   def manage_stations_in_route
@@ -310,6 +306,9 @@ class Menu
       print "Train: №:#{user_train.number} type:#{user_train.type}"
       puts
     end
+  rescue StandardError => e
+    validation_error_message(e)
+    retry
   end
 
   def remove_carriage_from_train

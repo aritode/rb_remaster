@@ -1,4 +1,7 @@
+require_relative 'modules/validation'
+
 class Station
+  include Validation
   attr_reader :name, :trains
 
   @@stations = []
@@ -6,6 +9,7 @@ class Station
   def initialize(name)
     @name = name
     @trains = []
+    validate!
     @@stations << self
   end
 
@@ -23,5 +27,15 @@ class Station
 
   def trains_by_type(type)
     trains.select { |train| train.type == type }
+  end
+
+  private
+
+  def validate!
+    if Station.all.any? { |item| item.name.downcase == @name.downcase }
+      raise "Station #{@name} is already in Stations"
+    end
+    raise 'Station name can\'t be empty' if @name.empty?
+    true
   end
 end
