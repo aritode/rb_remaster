@@ -82,10 +82,15 @@ class Menu
 
     title = 'Please enter Train number:'
     user_input_number = characters_user_input(title)
-
-    train = train_type.new(user_input_number)
-    @trains << train
-    puts "Train: №:#{train.number} type:#{train.type} created!"
+    if Train.find(user_input_number).nil?
+      train = train_type.new(user_input_number)
+      @trains << train
+      puts "Train: №:#{train.number} type:#{train.type} created!"
+    else
+      puts "Train with №:#{user_input_number} is already exist!"
+      puts 'Please, try again'
+      create_train
+    end
   end
 
   def create_route

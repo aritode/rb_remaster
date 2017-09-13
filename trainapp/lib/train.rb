@@ -4,11 +4,18 @@ class Train
   include VendorName
   attr_reader :speed, :carriages, :type, :number, :route
 
+  @@trains = {}
+
   def initialize(number, type)
     @number = number
     @type = type
     @carriages = []
     @speed = 0
+    @@trains[number] = self
+  end
+
+  def self.find(number)
+    @@trains[number]
   end
 
   def accelerate
