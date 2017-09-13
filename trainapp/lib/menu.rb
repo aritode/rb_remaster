@@ -1,7 +1,6 @@
 class Menu
 
   def initialize
-    @stations = []
     @trains = []
     @routes = []
   end
@@ -65,11 +64,9 @@ class Menu
 
   def create_station(title = '[CREATE] Please enter Station name to create:')
     user_input = characters_user_input(title)
-    # @stations.any? { |item| item.name.downcase == user_input.downcase }
-    double_entries = @stations.select { |item| item.name.downcase == user_input.downcase }
+    double_entries = Station.all.select { |item| item.name.downcase == user_input.downcase }
     if double_entries.empty?
       station = Station.new(user_input)
-      @stations << station
       puts "Station: #{station.name} created!"
     else
       puts "\nStation #{user_input} is already in Stations"
@@ -92,10 +89,10 @@ class Menu
   end
 
   def create_route
-    if @stations.size < 2
+    if Station.all.size < 2
       puts
       puts 'For new Route you need at least 2 Stations.'
-      puts "You have only #{@stations.count}"
+      puts "You have only #{Station.all.count}"
 
       title = 'Do you want to create Station?'
       custom_list = ['Yes, let\'s create Station',
@@ -115,17 +112,17 @@ class Menu
 
   def create_route_core
     title = 'Please choose Route first Station:'
-    user_input_first = ordered_list_user_input(title, @stations)
+    user_input_first = ordered_list_user_input(title, Station.all)
 
     title = 'Please choose Route last Station:'
-    user_input_last = ordered_list_user_input(title, @stations)
+    user_input_last = ordered_list_user_input(title, Station.all)
 
     if user_input_last == user_input_first
       puts "\nLast Station can't be the same as First Station"
       puts 'Please, try again'
       create_route_core
     else
-      route = Route.new(@stations[user_input_first - 1], @stations[user_input_last - 1])
+      route = Route.new(Station.all[user_input_first - 1], Station.all[user_input_last - 1])
       @routes << route
       puts "Route: #{route.name} created!"
     end
@@ -173,7 +170,7 @@ class Menu
   end
 
   def add_station_to_route(route)
-    available_stations = @stations.select { |item| !route.stations.include?(item) }
+    available_stations = Station.all.select { |item| !route.stations.include?(item) }
     if available_stations.empty?
       puts "\nThere is no available Stations to Add to the Route"
       title = 'Do you want to create Station?'
@@ -197,7 +194,7 @@ class Menu
   end
 
   def remove_station_from_route(route)
-    available_stations = @stations.select do |item|
+    available_stations = Station.all.select do |item|
       item != route.stations.first && item != route.stations.last
     end
     if available_stations.empty?
@@ -432,7 +429,7 @@ class Menu
 
   def print_stations_and_trains
     puts 'Show all Stations'
-    @stations.each do |station|
+    Station.all.each do |station|
       puts "Station: #{station.name}:"
       puts "Trains:"
       station.trains.each { |train| puts "№:#{train.number} type:#{train.type}" }
