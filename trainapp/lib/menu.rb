@@ -32,6 +32,7 @@ class Menu
         7) Remove Carriage from Train
         8) Move Train Forward and Backwards by assigned Route
         9) Show List of Stations and Trains on the Stations
+        10) Take Seat or fill Volume in Carriage
         0) QUIT
     DISPLAY_MENU
     print '=> '
@@ -57,6 +58,8 @@ class Menu
       move_train_by_route
     when 9
       print_stations_and_trains
+    when 10
+      take_seat_volume_carriage
     else
       display_menu
     end
@@ -414,7 +417,9 @@ class Menu
       if item.class ==  Route || item.class == Station
         puts "#{i}) #{item.name}"
       elsif item.kind_of? Train
-        puts "#{i}) №:#{item.number} type:#{item.type}"
+        puts "#{i}) #{item.print_info}"
+      elsif item.kind_of? Carriage
+        puts "#{i}) #{item.print_info}"
       else
         puts "#{i}) #{item}"
       end
@@ -444,6 +449,34 @@ class Menu
       station.each_train do |train|
         puts "\nTrain №: #{train.number}, type: #{train.type}, carriages: #{train.carriages.count}"
         train.each_carriage { |carriage| puts carriage.print_info }
+      end
+    end
+  end
+
+  def take_seat_volume_carriage
+    if @trains.empty?
+      puts 'You have no Trains. Please add Train and then Carriage'
+      add_carriage_to_train
+    else
+      title = 'Please choose Train:'
+      user_input = ordered_list_user_input(title, @trains)
+      user_train = @trains[user_input - 1]
+
+      title = 'Please choose Carriage:'
+      user_input = ordered_list_user_input(title, user_train.carriages)
+      user_carriage = user_train.carriages[user_input - 1]
+      if user_carriage.is_a? CargoCarriage
+        title = 'Please enter Volume to fill:'
+        user_input = characters_user_input(title).to_i
+        user_carriage.take_volume(user_input)
+      elsif user_carriage.is_a? PassengerCarriage
+        if user_carriage.take_seat
+          puts 'Seat is taken'
+        else
+          puts 'There is no available seats'
+        end
+      else
+        puts 'ERROR'
       end
     end
   end

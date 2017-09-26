@@ -75,6 +75,10 @@ class Train
     carriages.each { |carriage| yield carriage } if block_given?
   end
 
+  def print_info
+    "Train №: #{number}, type: #{type}, carriages: #{carriages.count}"
+  end
+
   protected
 
   def validate!
