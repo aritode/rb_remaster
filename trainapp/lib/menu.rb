@@ -294,9 +294,13 @@ class Menu
       user_input = characters_user_input(title)
 
       if user_train.is_a? CargoTrain
-        carriage = CargoCarriage.new(user_input)
+        title = 'Please enter Cargo Carriage maximum volume:'
+        user_input_volume = characters_user_input(title).to_i
+        carriage = CargoCarriage.new(user_input, user_input_volume)
       elsif user_train.is_a? PassengerTrain
-        carriage = PassengerCarriage.new(user_input)
+        title = 'Please enter Carriage maximum number of seats:'
+        user_input_volume = characters_user_input(title).to_i
+        carriage = PassengerCarriage.new(user_input, user_input_volume)
       else
         puts "ERROR"
       end

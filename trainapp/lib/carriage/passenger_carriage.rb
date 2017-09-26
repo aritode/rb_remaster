@@ -5,6 +5,7 @@ class PassengerCarriage < Carriage
   def initialize(number, total_seats = MAX_SEATS)
     @total_seats = total_seats
     @reserved_seats = 0
+    validate!
     super(number)
   end
 
@@ -14,5 +15,12 @@ class PassengerCarriage < Carriage
 
   def seats_available
     @total_seats - reserved_seats
+  end
+
+  private
+
+  def validate!
+    raise 'Maximum number of Seats must be greater than 0' if @total_seats.zero?
+    true
   end
 end
