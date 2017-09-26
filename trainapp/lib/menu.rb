@@ -437,10 +437,14 @@ class Menu
 
   def print_stations_and_trains
     puts 'Show all Stations'
+    puts "There are no Stations." if Station.all.empty?
     Station.all.each do |station|
-      puts "Station: #{station.name}:"
+      puts "\nStation: #{station.name}:"
       puts "Trains:"
-      station.trains.each { |train| puts "№:#{train.number} type:#{train.type}" }
+      station.each_train do |train|
+        puts "\nTrain №: #{train.number}, type: #{train.type}, carriages: #{train.carriages.count}"
+        train.each_carriage { |carriage| puts carriage.print_info }
+      end
     end
   end
 end

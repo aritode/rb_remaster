@@ -1,9 +1,8 @@
 class CargoCarriage < Carriage
-  attr_reader :volume
-
   def initialize(number, volume_max)
     @volume_max = volume_max
     @volume = 0
+    @type = self.class
     validate!
     super(number)
   end
@@ -13,7 +12,12 @@ class CargoCarriage < Carriage
   end
 
   def available_volume
-    @volume_max - volume
+    @volume_max - @volume
+  end
+
+  def print_info
+    "Carriage №: #{number}, type: #{@type}, available volume: #{available_volume}, " \
+    "filled volume: #{@volume}"
   end
 
   private
