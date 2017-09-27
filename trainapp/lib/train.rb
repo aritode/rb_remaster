@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require_relative 'modules/vendor_name'
 require_relative 'modules/instance_counter'
 require_relative 'modules/validation'
@@ -40,7 +41,7 @@ class Train
   end
 
   def remove_carriage
-    @carriages.pop if speed.zero? && carriages.size > 0
+    @carriages.pop if speed.zero? && !carriages.empty?
   end
 
   def route=(route)
