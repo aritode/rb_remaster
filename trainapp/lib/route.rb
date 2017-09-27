@@ -17,8 +17,8 @@ class Route
     @stations.delete(station) unless station == @stations.first || station == @stations.last
   end
 
-  def name
-    "#{@stations.first.name} - #{@stations.last.name}"
+  def to_s
+    "Route: #{@stations.first.name} - #{@stations.last.name}"
   end
 
   private

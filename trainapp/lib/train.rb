@@ -71,6 +71,14 @@ class Train
     @route.stations[@station_index - 1] unless @station_index.zero?
   end
 
+  def each_carriage
+    carriages.each { |carriage| yield carriage } if block_given?
+  end
+
+  def to_s
+    "Train №: #{number}, type: #{type}, carriages: #{carriages.count}"
+  end
+
   protected
 
   def validate!
