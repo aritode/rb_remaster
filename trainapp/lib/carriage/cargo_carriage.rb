@@ -2,7 +2,6 @@ class CargoCarriage < Carriage
   def initialize(number, volume_max)
     @volume_max   = volume_max
     @volume_taken = 0
-    @type         = self.class
     validate!
     super(number)
   end
@@ -16,7 +15,7 @@ class CargoCarriage < Carriage
   end
 
   def to_s
-    "Carriage №: #{number}, type: #{@type}, available volume: #{available_volume}, " \
+    "Carriage №: #{number}, type: #{self.class}, available volume: #{available_volume}, " \
     "filled volume: #{@volume_taken}"
   end
 

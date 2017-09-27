@@ -2,7 +2,6 @@ class PassengerCarriage < Carriage
   def initialize(number, total_seats)
     @total_seats = total_seats
     @reserved_seats = 0
-    @type = self.class
     validate!
     super(number)
   end
@@ -16,7 +15,7 @@ class PassengerCarriage < Carriage
   end
 
   def to_s
-    "Carriage №: #{number}, type: #{@type}, available seats: #{seats_available}, "  \
+    "Carriage №: #{number}, type: #{self.class}, available seats: #{seats_available}, "  \
     "reserved seats: #{@reserved_seats}"
   end
 
