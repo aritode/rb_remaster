@@ -21,6 +21,10 @@ class Route
     "#{@stations.first.name} - #{@stations.last.name}"
   end
 
+  def to_s
+    name
+  end
+
   private
 
   def validate!

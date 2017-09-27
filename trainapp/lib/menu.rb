@@ -413,17 +413,7 @@ class Menu
     puts
     puts title
     puts '=' * title.length
-    items_array.each.with_index(1) do |item, i|
-      if item.class ==  Route || item.class == Station
-        puts "#{i}) #{item.name}"
-      elsif item.kind_of? Train
-        puts "#{i}) #{item.print_info}"
-      elsif item.kind_of? Carriage
-        puts "#{i}) #{item.print_info}"
-      else
-        puts "#{i}) #{item}"
-      end
-    end
+    items_array.each.with_index(1) { |item, i| puts "#{i}) #{item}" }
     print '=> '
     check_list_user_input(items_array)
   end
@@ -448,7 +438,7 @@ class Menu
       puts "Trains:"
       station.each_train do |train|
         puts "\nTrain №: #{train.number}, type: #{train.type}, carriages: #{train.carriages.count}"
-        train.each_carriage { |carriage| puts carriage.print_info }
+        train.each_carriage { |carriage| puts carriage }
       end
     end
   end

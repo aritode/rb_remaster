@@ -3,6 +3,7 @@ require_relative 'modules/validation'
 class Station
   include Validation
   attr_reader :name, :trains
+  alias_method :to_s, :name
 
   @@stations = []
 

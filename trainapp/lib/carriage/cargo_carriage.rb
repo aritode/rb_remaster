@@ -15,7 +15,7 @@ class CargoCarriage < Carriage
     @volume_max - @volume
   end
 
-  def print_info
+  def to_s
     "Carriage №: #{number}, type: #{@type}, available volume: #{available_volume}, " \
     "filled volume: #{@volume}"
   end

@@ -75,7 +75,7 @@ class Train
     carriages.each { |carriage| yield carriage } if block_given?
   end
 
-  def print_info
+  def to_s
     "Train №: #{number}, type: #{type}, carriages: #{carriages.count}"
   end
 

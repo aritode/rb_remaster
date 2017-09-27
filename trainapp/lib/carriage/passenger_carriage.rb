@@ -15,7 +15,7 @@ class PassengerCarriage < Carriage
     @total_seats - @reserved_seats
   end
 
-  def print_info
+  def to_s
     "Carriage №: #{number}, type: #{@type}, available seats: #{seats_available}, "  \
     "reserved seats: #{@reserved_seats}"
   end
