@@ -1,9 +1,10 @@
+# frozen_string_literal: true
 require_relative 'modules/validation'
 
 class Station
   include Validation
   attr_reader :name, :trains
-  alias_method :to_s, :name
+  alias to_s name
 
   @@stations = []
 
@@ -37,7 +38,7 @@ class Station
   private
 
   def validate!
-    if Station.all.any? { |item| item.name.downcase == @name.downcase }
+    if Station.all.any? { |item| item.name.casecmp(@name.downcase).zero? }
       raise "Station #{@name} is already in Stations"
     end
     raise 'Station name can\'t be empty' if @name.empty?

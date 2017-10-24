@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class CargoCarriage < Carriage
   def initialize(number, volume_max)
     @volume_max   = volume_max
@@ -7,7 +8,7 @@ class CargoCarriage < Carriage
   end
 
   def take_volume(amount)
-    @volume_taken += amount if amount <= available_volume && amount > 0
+    @volume_taken += amount if amount <= available_volume && amount.positive?
   end
 
   def available_volume

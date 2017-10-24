@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class PassengerCarriage < Carriage
   def initialize(number, total_seats)
     @total_seats = total_seats
