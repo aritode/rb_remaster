@@ -2,17 +2,24 @@
 require_relative 'modules/vendor_name'
 require_relative 'modules/instance_counter'
 require_relative 'modules/validation'
+require_relative 'modules/accessors'
 
 class Train
+  include Accessors
   include VendorName
   include InstanceCounter
   include Validation
-  attr_reader :speed, :carriages, :type, :number, :route
+  attr_reader :carriages, :type, :route
+  strong_attr_accessor :number, String
+  attr_accessors_with_history :speed
 
   @@trains = {}
 
   NUMBER_FORMAT = /^(\w{3})(-\w{2})?$/
   TYPE_FORMAT = /^(CargoTrain|PassengerTrain)$/
+
+  validate :number, :presence
+  validate :number, :format, NUMBER_FORMAT
 
   def initialize(number, type)
     @number = number
@@ -84,10 +91,8 @@ class Train
 
   def validate!
     raise "Train with №:#{@number} is already exist!" unless Train.find(@number).nil?
-    raise 'Train number can\'t be empty' if @number.empty?
-    raise 'Train must be with correct number format: ###-##' if @number !~ NUMBER_FORMAT
     raise 'Train must be correct type: CargoTrain or PassengerTrain' unless @type !~ TYPE_FORMAT
-    true
+    super
   end
 
   private

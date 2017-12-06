@@ -9,6 +9,8 @@ class Carriage
   include Validation
   attr_reader :number
 
+  validate :number, :presence
+
   TYPE_FORMAT = /^(CargoTrain|PassengerTrain)$/
 
   def initialize(number)
@@ -20,7 +22,7 @@ class Carriage
   protected
 
   def validate!
-    raise 'Carriage number can\'t be empty' if @number.empty?
     raise 'Train must be correct type: CargoTrain or PassengerTrain' unless @type !~ TYPE_FORMAT
+    super
   end
 end

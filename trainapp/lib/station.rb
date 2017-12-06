@@ -6,6 +6,8 @@ class Station
   attr_reader :name, :trains
   alias to_s name
 
+  validate :name, :presence
+
   @@stations = []
 
   def initialize(name)
@@ -41,7 +43,6 @@ class Station
     if Station.all.any? { |item| item.name.casecmp(@name.downcase).zero? }
       raise "Station #{@name} is already in Stations"
     end
-    raise 'Station name can\'t be empty' if @name.empty?
-    true
+    super
   end
 end
