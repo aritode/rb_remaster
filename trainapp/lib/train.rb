@@ -5,7 +5,7 @@ require_relative 'modules/validation'
 require_relative 'modules/accessors'
 
 class Train
-  include Accessors
+  extend Accessors
   include VendorName
   include InstanceCounter
   include Validation
