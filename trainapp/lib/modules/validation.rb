@@ -2,6 +2,7 @@
 module Validation
   def self.included(base)
     base.extend ClassMethods
+    base.send :include, InstanceMethods
   end
 
   module ClassMethods
@@ -15,37 +16,41 @@ module Validation
     end
   end
 
-  def validate!
-    self.class.validations.each do |attr_name, params|
-      params.each do |method_name, option|
-        attr_name_value = instance_variable_get("@#{attr_name}")
-        send(method_name, attr_name, attr_name_value, option)
+  module InstanceMethods
+    def validate!
+      self.class.validations.each do |attr_name, params|
+        attr_value = instance_variable_get("@#{attr_name}")
+        params.each do |method_name, option|
+          method_name = "validate_#{method_name}"
+          send(method_name, attr_name, attr_value, option)
+        end
       end
     end
-  end
 
-  def valid?
-    !!validate!
-  rescue
-    false
-  end
-
-  protected
-
-  def presence(attr_name, attr_name_value, _option)
-    if attr_name_value.nil? || attr_name_value.to_s.empty?
-      raise "#{self.class} @#{attr_name} can't be empty"
+    def valid?
+      validate!
+      true
+    rescue
+      false
     end
-  end
 
-  def format(attr_name, attr_name_value, option)
-    if attr_name_value !~ option
-      raise "#{self.class} must be with correct @#{attr_name} format: #{option}"
+    protected
+
+    def validate_presence(attr_name, attr_value, _option)
+      if attr_value.to_s.empty?
+        raise "#{self.class} @#{attr_name} can't be empty"
+      end
     end
-  end
 
-  def type(attr_name, attr_name_value, option)
-    message = "#{self.class} @#{attr_name} must be correct type: #{option}"
-    raise message unless attr_name_value.is_a?(option)
+    def validate_format(attr_name, attr_value, format)
+      if attr_value !~ format
+        raise "#{self.class} must be with correct @#{attr_name} format: #{format}"
+      end
+    end
+
+    def validate_type(attr_name, attr_name_value, type)
+      message = "#{self.class} @#{attr_name} must be correct type: #{type}"
+      raise message unless attr_name_value.is_a?(type)
+    end
   end
 end
